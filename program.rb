@@ -2,11 +2,16 @@
 Dir.glob('lib/**/*.rb') { |f| require_relative f }
 
 class Program
-  def initialize
+  def initialize env
     clear_display
-    @participants = get_participants
+    @participants = get_participants.shuffle
     @drive_time = get_drive_time
-    @timer = AgileTimer.new({ drive_time: @drive_time, participants: @participants })
+    @random_voice = env["RANDOM_VOICE"] == "true" ? true : false
+    @timer = AgileTimer.new({
+      drive_time: @drive_time,
+      participants: @participants,
+      random_voice: @random_voice
+    })
     begin_timing
   end
 
@@ -65,4 +70,4 @@ class Program
   end
 end
 
-Program.new
+Program.new(ENV)

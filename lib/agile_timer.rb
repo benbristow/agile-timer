@@ -2,6 +2,7 @@ class AgileTimer
   def initialize params
     @drive_time = drive_time_in_seconds(params[:drive_time])
     @participants = params[:participants]
+    @random_voice = params[:random_voice]
     @current_driver_index = 0
     current_driver.speak_name_out_loud!
   end
@@ -13,7 +14,7 @@ class AgileTimer
   def wait_for_timer
     sleep @drive_time
     move_to_next_driver!
-    current_driver.speak_name_out_loud!
+    current_driver.speak_name_out_loud!(random_voice: @random_voice)
   end
 
   private
@@ -46,4 +47,3 @@ class AgileTimer
     end
   end
 end
-
